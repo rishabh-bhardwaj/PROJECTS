@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Number guessing game</title>
+
+    <style>
+      html {
+        font-family: sans-serif;
+      }
+      body {
+        width: 50%;
+        max-width: 800px;
+        min-width: 480px;
+        margin: 0 auto;
+      }
+      .lastResult {
+        color: white;
+        padding: 3px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Number guessing game</h1>
+    <p>We have selected a random number between 1 and 100. See if you can guess it in 10 turns or fewer. We'll tell you if your guess was too high or too low.</p>
+    <script>
+        function randomgenerate()
+        {
+            low=0;
+            high=100;
+            var number=(Math.floor(Math.random()*(101)));
+            //return number;
+            console.log (number);
+            return number;
+        }
+       //randomgenerate();
+       num=randomgenerate();
+      
+    </script>
+    <div class="form">
+      <label for="guessField">Enter a guess: </label><input type="text" id="guessField" class="guessField">
+      <input type="submit" onclick="func()" value="Submit guess" id="guessSubmit">
+    </div>
+
+    <div class="resultParas">
+      <p class="guesses"></p>
+      <p class="lastResult"></p>
+      <p class="lowOrHi"></p>
+      <p id="new"></p>
+    </div>
+
+    <script>
+            numbers="Previous Guesses : ";
+            var count=1;
+            function func()
+            {
+              
+                    if(count<=10)
+                    {
+                        p='\0';
+                        p=document.getElementById("guessField").value;
+                        if(p==num)
+                        {
+                            console.log("guessed");
+                            b=document.getElementsByClassName("lowOrHi");
+                            document.getElementById("guessField").value=" " ;
+                            document.getElementById("guessField").disabled=true;
+                            document.getElementById("guessSubmit").disabled=true;
+                            abc=document.getElementsByClassName("lastResult");
+                            abc[0].textContent="congratulations , you got it right";
+                            abc[0].style.backgroundColor="green";
+                            g=document.getElementsByClassName("lowOrHi");
+                            g[0].textContent=" ";
+                            e=document.getElementById("new");
+                            //count=1;
+                            e.innerHTML="<input type='submit' value='start a new game' onclick='func2()'></input>";
+                        }
+                        else
+                        {
+                            console.log("not guessed");
+                            if(p-num>0)
+                            {
+                                abc=document.getElementsByClassName("lastResult");
+                                abc[0].textContent="Wrong";
+                                abc[0].style.backgroundColor="red";
+                                b=document.getElementsByClassName("lowOrHi");
+                                b[0].textContent="your guess is high";
+                                document.getElementById("guessField").value=" " ;
+                            }
+                            if(p-num<0)
+                            {
+                                abc=document.getElementsByClassName("lastResult");
+                                abc[0].textContent="Wrong";
+                                abc[0].style.backgroundColor="red";
+                                b=document.getElementsByClassName("lowOrHi");
+                                b[0].textContent="your guess is low";
+                                document.getElementById("guessField").value=" " ;
+                            }
+                        }
+                        h=document.getElementsByClassName("guesses");
+                        numbers+=p+" ";
+                        h[0].textContent=numbers;
+                        count=count+1;
+                    }
+                    else
+                    {
+                        console.log("chances over");
+                        b=document.getElementsByClassName("lowOrHi");
+                        document.getElementById("guessField").disabled=true;
+                        document.getElementById("guessSubmit").disabled=true;
+                        abc=document.getElementsByClassName("lastResult");
+                        abc[0].textContent="oops chances over!!!";
+                        abc[0].style.backgroundColor="red";
+                        g=document.getElementsByClassName("lowOrHi");
+                        g[0].textContent=" ";
+                    }
+                //}
+
+            }
+            function func2()
+            {
+                count=0;
+                document.getElementById('guessField').disabled=false;
+                document.getElementById('guessSubmit').disabled=false;
+                func();
+                num=randomgenerate();
+                numbers="Previous Guesses";
+                a=document.getElementsByClassName("guesses");
+                b=document.getElementsByClassName("lastResult");
+                c=document.getElementsByClassName("lowOrHi");
+                document.getElementById("new").innerHTML=" ";
+                b[0].style.backgroundColor="white";
+                a[0].textContent=" ";
+                b[0].textContent=" ";
+                c[0].textContent=" ";
+                
+            }
+    </script>
+  </body>
+</html>
