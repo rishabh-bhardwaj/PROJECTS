@@ -1,0 +1,25 @@
+
+name: Create New Branch
+
+on:
+  repository_dispatch:
+    types: [create-branch]
+
+jobs:
+  create_branch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write # If you're creating pull requests
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ github.event.client_payload.repoUrl }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create New Branch
+        run: git checkout -b ${{ github.event.client_payload.branchName }}
+
+      - name: Push Branch
+        run: git push origin ${{ github.event.client_payload.branchName }}
